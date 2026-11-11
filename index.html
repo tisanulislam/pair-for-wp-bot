@@ -1,0 +1,514 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#100d24">
+<title>HEART PAIR | WhatsApp Pairing</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg: #100d24;
+  --card: #1d1938;
+  --pink: #ff70b7;
+  --purple: #a78bfa;
+  --text: #ffffff;
+  --muted: #aaa5c5;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 15% 15%, #54265d55, transparent 35%),
+    radial-gradient(circle at 85% 85%, #40328b55, transparent 35%),
+    var(--bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px;
+  overflow-x: hidden;
+}
+
+.heart {
+  position: fixed;
+  bottom: -40px;
+  color: #ff70b7;
+  opacity: .25;
+  pointer-events: none;
+  animation: floatUp 9s linear infinite;
+  z-index: 0;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  z-index: 2;
+  animation: appear .8s ease;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+  background: linear-gradient(145deg, #211c40, #17142f);
+  border: 1px solid #ffffff19;
+  border-radius: 25px;
+  padding: 30px 25px;
+  box-shadow: 0 20px 70px #00000065;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.logo-icon {
+  font-size: 39px;
+  color: var(--pink);
+  filter: drop-shadow(0 0 15px #ff70b788);
+  animation: beat 1.5s infinite;
+}
+
+@keyframes beat {
+  50% { transform: scale(1.15); }
+}
+
+.logo h1 {
+  font-size: 27px;
+  letter-spacing: 3px;
+  margin-top: 7px;
+  background: linear-gradient(90deg, #ff8bc5, #b9a0ff);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.logo p {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 8px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #85efbd;
+  font-size: 11px;
+  margin-bottom: 23px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  background: #4ade80;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #4ade80;
+}
+
+h2 {
+  font-size: 21px;
+  text-align: center;
+  margin-bottom: 9px;
+}
+
+.subtitle {
+  text-align: center;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+label {
+  display: block;
+  font-size: 12px;
+  color: #dcd5f7;
+  margin: 15px 0 9px;
+  font-weight: 600;
+}
+
+select, input {
+  width: 100%;
+  padding: 15px;
+  color: white;
+  background: #100e25;
+  border: 1px solid #ffffff20;
+  border-radius: 12px;
+  outline: none;
+  font-size: 14px;
+  font-family: inherit;
+  transition: .3s;
+}
+
+select:focus, input:focus {
+  border-color: var(--pink);
+  box-shadow: 0 0 15px #ff70b725;
+}
+
+select option {
+  background: #211c40;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+}
+
+.generate {
+  width: 100%;
+  padding: 16px;
+  margin-top: 23px;
+  border-radius: 12px;
+  background: linear-gradient(100deg, #ff70b7, #9e7bff);
+  color: white;
+  font-size: 14px;
+  font-weight: 800;
+  transition: .3s;
+  box-shadow: 0 7px 25px #c66bea35;
+}
+
+.generate:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px #c66bea60;
+}
+
+.generate:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.result {
+  display: none;
+  margin-top: 22px;
+  padding: 19px;
+  background: #100e25;
+  border: 1px solid #a78bfa55;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.result h3 {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+
+.code {
+  font-size: 27px;
+  letter-spacing: 5px;
+  font-weight: 800;
+  color: #ff8bc5;
+  overflow-wrap: anywhere;
+  margin-bottom: 17px;
+}
+
+.copy {
+  background: #a78bfa;
+  color: white;
+  padding: 11px 23px;
+  border-radius: 9px;
+  font-weight: 700;
+}
+
+.message {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-top: 13px;
+}
+
+.error {
+  color: #ff8b9b;
+  font-size: 12px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.contact {
+  display: block;
+  text-decoration: none;
+  color: white;
+  background: #168e63;
+  text-align: center;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 22px;
+  transition: .3s;
+}
+
+.contact:hover {
+  background: #20b77e;
+  transform: translateY(-2px);
+}
+
+.footer {
+  text-align: center;
+  color: #827d9d;
+  font-size: 10px;
+  margin-top: 23px;
+  line-height: 1.8;
+}
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid #ffffff55;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+  margin-right: 7px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media(max-width: 420px) {
+  .card { padding: 25px 19px; }
+  .logo h1 { font-size: 24px; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="card">
+
+    <div class="logo">
+      <div class="logo-icon">♡</div>
+      <h1>HEART PAIR</h1>
+      <p>Connect your WhatsApp with love.</p>
+    </div>
+
+    <div class="status">
+      <span class="dot"></span>
+      PAIRING PORTAL
+    </div>
+
+    <h2>Connect WhatsApp</h2>
+    <p class="subtitle">
+      Enter your WhatsApp number and generate
+      your unique pairing code.
+    </p>
+
+    <label for="country">Select Country</label>
+    <select id="country">
+      <option value="880">🇧🇩 Bangladesh (+880)</option>
+      <option value="91">🇮🇳 India (+91)</option>
+      <option value="1">🇺🇸 USA (+1)</option>
+      <option value="44">🇬🇧 United Kingdom (+44)</option>
+      <option value="92">🇵🇰 Pakistan (+92)</option>
+      <option value="966">🇸🇦 Saudi Arabia (+966)</option>
+      <option value="971">🇦🇪 UAE (+971)</option>
+      <option value="60">🇲🇾 Malaysia (+60)</option>
+      <option value="65">🇸🇬 Singapore (+65)</option>
+      <option value="977">🇳🇵 Nepal (+977)</option>
+      <option value="94">🇱🇰 Sri Lanka (+94)</option>
+      <option value="61">🇦🇺 Australia (+61)</option>
+      <option value="49">🇩🇪 Germany (+49)</option>
+      <option value="33">🇫🇷 France (+33)</option>
+      <option value="81">🇯🇵 Japan (+81)</option>
+      <option value="82">🇰🇷 South Korea (+82)</option>
+      <option value="7">🇷🇺 Russia (+7)</option>
+      <option value="234">🇳🇬 Nigeria (+234)</option>
+      <option value="27">🇿🇦 South Africa (+27)</option>
+      <option value="other">Other country (enter full number)</option>
+    </select>
+
+    <label for="phone">WhatsApp Phone Number</label>
+    <input
+      id="phone"
+      type="tel"
+      placeholder="Enter number without country code"
+      autocomplete="tel"
+    >
+
+    <button class="generate" id="generate">
+      ♡ Generate Pairing Code
+    </button>
+
+    <div class="error" id="error"></div>
+
+    <div class="result" id="result">
+      <h3>YOUR PAIRING CODE</h3>
+      <div class="code" id="pairCode">--------</div>
+      <button class="copy" id="copy">Copy Code</button>
+      <p class="message" id="resultMessage">
+        Open WhatsApp → Linked Devices →
+        Link with phone number instead.
+      </p>
+    </div>
+
+    <a
+      class="contact"
+      href="https://wa.me/8801611895004"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      ♡ Contact Owner on WhatsApp
+    </a>
+
+    <div class="footer">
+      HEART PAIR © 2026<br>
+      Made with ♡ for WhatsApp Users
+    </div>
+
+  </div>
+</div>
+
+<script>
+/*
+  IMPORTANT:
+  Replace this URL with your actual Railway backend URL.
+  Your backend must implement POST /pair.
+*/
+const API_URL = "https://YOUR-RAILWAY-DOMAIN/pair";
+
+const country = document.getElementById("country");
+const phone = document.getElementById("phone");
+const generate = document.getElementById("generate");
+const result = document.getElementById("result");
+const pairCode = document.getElementById("pairCode");
+const error = document.getElementById("error");
+const copy = document.getElementById("copy");
+const resultMessage = document.getElementById("resultMessage");
+
+let currentCode = "";
+
+country.addEventListener("change", () => {
+  phone.placeholder = country.value === "other"
+    ? "Enter full international number, e.g. +880..."
+    : "Enter number without country code";
+
+  phone.value = "";
+});
+
+function getPhoneNumber() {
+  let number = phone.value.replace(/\D/g, "");
+
+  if (country.value === "other") {
+    return number;
+  }
+
+  // Remove leading zero from local number.
+  number = number.replace(/^0+/, "");
+
+  return country.value + number;
+}
+
+generate.addEventListener("click", async () => {
+  error.textContent = "";
+  result.style.display = "none";
+
+  const number = getPhoneNumber();
+
+  if (!/^\d{7,15}$/.test(number)) {
+    error.textContent = "Please enter a valid international phone number.";
+    return;
+  }
+
+  if (!/^https:\/\/[^/]+\/pair$/.test(API_URL) ||
+      API_URL.includes("YOUR-RAILWAY-DOMAIN")) {
+    error.textContent = "Pairing server is not configured yet.";
+    return;
+  }
+
+  generate.disabled = true;
+  generate.innerHTML = '<span class="spinner"></span>Generating...';
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        phoneNumber: number
+      })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Pairing request failed.");
+    }
+
+    if (!data.code) {
+      throw new Error("No pairing code received from server.");
+    }
+
+    currentCode = data.code;
+    pairCode.textContent = currentCode;
+    resultMessage.textContent =
+      "Open WhatsApp → Linked Devices → Link with phone number instead. Enter your code there.";
+
+    result.style.display = "block";
+
+  } catch (err) {
+    error.textContent = err.message || "Server connection failed.";
+  } finally {
+    generate.disabled = false;
+    generate.innerHTML = "♡ Generate Pairing Code";
+  }
+});
+
+copy.addEventListener("click", async () => {
+  if (!currentCode) return;
+
+  try {
+    await navigator.clipboard.writeText(currentCode);
+    copy.textContent = "✓ Copied!";
+    setTimeout(() => copy.textContent = "Copy Code", 1800);
+  } catch {
+    error.textContent = "Could not copy. Please copy the code manually.";
+  }
+});
+
+// Floating heart animation
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.textContent = "♡";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = (15 + Math.random() * 22) + "px";
+  heart.style.animationDuration = (6 + Math.random() * 7) + "s";
+
+  document.body.appendChild(heart);
+
+  setTimeout(() => heart.remove(), 14000);
+}
+
+setInterval(createHeart, 900);
+</script>
+
+</body>
+</html>
